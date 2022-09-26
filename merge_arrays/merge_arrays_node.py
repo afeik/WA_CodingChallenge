@@ -5,8 +5,10 @@ from std_msgs.msg import Int32MultiArray
 
 class MergeArrays(Node):
 
-        #class attributes
-        
+        '''
+        This class sorts and merges two Int32MultiArrays received from the topics /input/array1 and /input/array2 and 
+        publishes the result to /output/array
+        '''
 
         #constructor
         def __init__(self):
@@ -35,27 +37,24 @@ class MergeArrays(Node):
 
         def set_array2(self,x):
             self.array2=x
+           
 
-            
         #callback functions for receiving messages
-        def sub_callback_array1(self, msg):
-            #message=msg.data
-            #self.get_logger().info(str(message))
-            #self.get_logger().info(str(self.array1))
-            #self.get_logger().info(str(msg.data))
+        def sub_callback_array1(self, msg): 
             if len(self.array1) == 0:
                 self.set_array1(msg.data)
                 self.get_logger().info(str(self.array1))
 
             self.check_publisher_status()
 
+
         def sub_callback_array2(self, msg):
-            #self.get_logger().info(str(msg.data))
             if len(self.array2) ==0:
                 self.set_array2(msg.data)
                 self.get_logger().info(str(self.array2))
-                
+            
             self.check_publisher_status()
+
 
         #check if two messages were received / sort the arrays / publish the message
         def check_publisher_status(self): 
@@ -63,24 +62,20 @@ class MergeArrays(Node):
             a2=list(self.get_array2())
             self.get_logger().info("a1: "+str(a1))
             self.get_logger().info("a2: "+str(a2))
+
             if len(a1) != 0 and len(a2) != 0:
                 msg = Int32MultiArray()
                 msg.data = sorted(a1+a2)
                 self.publisher_.publish(msg)
-                #self.get_logger().info("sorted: "+str(sorted(a1+a2)))
-                self.get_logger().info('Publishing: "%a"' % str(msg.data))
+                self.get_logger().info('Publishing: "%a"' % msg.data)
                 self.array1=[]
                 self.array2=[]
 
 
-
-
-
 def main(args=None):
+
     rclpy.init(args=args)
-
     merge_arrays = MergeArrays()
-
     rclpy.spin(merge_arrays)
 
     # Destroy the node explicitly

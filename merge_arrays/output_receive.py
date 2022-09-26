@@ -6,6 +6,11 @@ from std_msgs.msg import Int32MultiArray
 
 class MinimalSubscriber(Node):
 
+
+    '''
+    This class creates a minimal subscriber to the topic /output/array
+    '''
+
     def __init__(self):
         super().__init__('minimal_subscriber')
         self.subscription = self.create_subscription(
@@ -15,15 +20,14 @@ class MinimalSubscriber(Node):
             10)
         self.subscription  # prevent unused variable warning
 
+
     def listener_callback(self, msg):
         self.get_logger().info('I heard: "%s"' % msg.data)
 
 
 def main(args=None):
     rclpy.init(args=args)
-
     minimal_subscriber = MinimalSubscriber()
-
     rclpy.spin(minimal_subscriber)
 
     # Destroy the node explicitly

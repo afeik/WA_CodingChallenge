@@ -1,11 +1,16 @@
 import rclpy
 from rclpy.node import Node
-
 from std_msgs.msg import Int32MultiArray
 
 
 class array2_publisher(Node):
 
+
+    '''
+    This class sends out a test - array every 10 seconds to the topic /input/array2
+    '''
+
+    #constructor
     def __init__(self):
         super().__init__('array2_publisher')
         self.publisher_ = self.create_publisher(Int32MultiArray, '/input/array2', 10)
@@ -13,6 +18,7 @@ class array2_publisher(Node):
         self.timer = self.create_timer(timer_period, self.timer_callback)
         self.i = 0
 
+    #callback
     def timer_callback(self):
         msg = Int32MultiArray()
         msg.data = [43,5,3,2,67,2]
@@ -23,9 +29,7 @@ class array2_publisher(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-
     publisher = array2_publisher()
-
     rclpy.spin(publisher)
 
     # Destroy the node explicitly
