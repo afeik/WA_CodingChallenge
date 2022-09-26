@@ -67,7 +67,7 @@ class MergeArrays(Node):
                 msg = Int32MultiArray()
                 msg.data = sorted(a1+a2)
                 self.publisher_.publish(msg)
-                self.get_logger().info("sorted: "+str(sorted(a1+a2)))
+                #self.get_logger().info("sorted: "+str(sorted(a1+a2)))
                 self.get_logger().info('Publishing: "%a"' % str(msg.data))
                 self.array1=[]
                 self.array2=[]

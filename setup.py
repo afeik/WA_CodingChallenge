@@ -20,9 +20,10 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'merge_arrays_node = merge_arrays.mergearray:main',
+            'merge_arrays_node = merge_arrays.merge_arrays_node:main',
             'array1_publish = merge_arrays.array1_publish:main',
             'array2_publish = merge_arrays.array2_publish:main',
+            'output_receive = merge_arrays.output_receive:main',
 
         ],
     },
